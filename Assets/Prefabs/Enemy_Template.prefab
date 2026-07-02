@@ -161,7 +161,7 @@ MonoBehaviour:
   hitTrigger: Hit
   playerLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
 --- !u!114 &3941046777786337243
 MonoBehaviour:
   m_ObjectHideFlags: 0
