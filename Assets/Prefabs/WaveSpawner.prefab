@@ -153,7 +153,7 @@ MonoBehaviour:
     spawnDelay: 0
   timeBetweenWaves: 5
   autoStart: 1
-  loopWaves: 1
+  loopWaves: 0
   extraEnemiesPerLoop: 2
   healthMultiplierPerLoop: 1.2
   spawnPoints:
