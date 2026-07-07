@@ -18,6 +18,21 @@ public class RoomActivator : MonoBehaviour
     //    CompleteWave();
     //}
 
+    private void Awake()
+    {
+        if (waveSpawner != null)
+        {
+            waveSpawner.gameObject.SetActive(false);
+        }
+        foreach (GameObject door in doors)
+        {
+            if (door != null)
+            {
+                door.SetActive(false);
+            }
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
