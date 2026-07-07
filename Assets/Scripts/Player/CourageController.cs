@@ -4,15 +4,13 @@ using UnityEngine.Events;
 public class CourageController : MonoBehaviour
 {
     [Header("Courage")]
-    [SerializeField] float maxCourage = 100f;
-    [SerializeField] bool destroyOnDeath;
-    [SerializeField] float destroyDelay;
+    [SerializeField] private float maxCourage = 100f;
+    [SerializeField] private bool destroyOnDeath;
+    [SerializeField] private float destroyDelay;
 
-    [Header("Scare and Encourage")]
-    [SerializeField] float maxCourageLoss;
-    [SerializeField] float courageLossCapDuration;
-    [SerializeField] float maxCourgeGain;
-    [SerializeField] float courageGainCapDuration;
+    [Header("Room Caps")]
+    [SerializeField] private float courageLossOnProxy = 30f;
+    [SerializeField] private float courageGainOnKill = 20f;
 
     [Header("Events")]
     public UnityEvent<float, float> OnCourageChanged;
@@ -20,10 +18,15 @@ public class CourageController : MonoBehaviour
     public UnityEvent OnTerrified;
     public UnityEvent OnEncouraged;
 
-    float currentCourage;
-    bool isTerrified;
-    bool isInvulnerable;
-    //float invulnerabilityTimer;
+    private float currentCourage;
+    private float proxyLossThisRoom;
+    private float killGainThisRoom;
+
+    private bool isTerrified;
+    private bool isInvulnerable;
+    private bool roomEncounterActive;
+
+    public float CourageLossOnProxy => courageLossOnProxy;
 
     public float CurrentCourage => currentCourage;
     public float MaxCourage => maxCourage;
@@ -59,11 +62,11 @@ public class CourageController : MonoBehaviour
         OnCourageChanged?.Invoke(currentCourage, maxCourage);
         OnScared?.Invoke(hitPoint, hitDirection);
 
-        if (maxCourageLoss > 0f)
-        {
-            isInvulnerable = true;
-            //invulnerabilityTimer = maxCourageLoss;
-        }
+        //if (maxCourageLoss > 0f)
+        //{
+        //    isInvulnerable = true;
+        //    invulnerabilityTimer = maxCourageLoss;
+        //}
 
         if (currentCourage <= 0f)
             GetTerrified();

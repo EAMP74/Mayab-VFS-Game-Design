@@ -120,7 +120,7 @@ public class WeaponController : MonoBehaviour
         if (CurrentWeapon.muzzleFlashPrefab != null)
         {
             GameObject flash = Instantiate(CurrentWeapon.muzzleFlashPrefab, muzzlePoint.position, muzzlePoint.rotation, muzzlePoint);
-            Destroy(flash, 1f);
+            Destroy(flash, 0.5f);
         }
 
         if (CurrentWeapon.fireSound != null)
