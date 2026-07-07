@@ -153,6 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   amount: 100
+  courageAmount: 30
   weaponToGive: {fileID: 0}
   bobHeight: 0.3
   bobSpeed: 2
@@ -762,7 +763,7 @@ Transform:
   m_GameObject: {fileID: 276047418}
   serializedVersion: 2
   m_LocalRotation: {x: 0.36056772, y: -0.0000000115141425, z: 0.000000004451035, w: 0.93273306}
-  m_LocalPosition: {x: 11.13, y: 8.29, z: -2.1400003}
+  m_LocalPosition: {x: 0.03, y: 8.298, z: 15.719999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3439,7 +3440,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.36056772, y: -0.000000011514144, z: 0.000000004451037, w: 0.93273306}
-  m_LocalPosition: {x: 11.13, y: 8.29, z: -2.1400003}
+  m_LocalPosition: {x: 0.03, y: 8.298, z: 15.719999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6804,12 +6805,13 @@ Transform:
   m_GameObject: {fileID: 901852043}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.13, y: 1, z: 5.88}
+  m_LocalPosition: {x: 0.03, y: 1.008, z: 23.74}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 843158826}
   - {fileID: 476715978}
+  - {fileID: 1974421378}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &901852049
@@ -6825,6 +6827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grenadePrefab: {fileID: 0}
+  initialGrenadeCount: 0
   grenadeThrowForce: 15
   grenadeArc: 30
   grenadeCooldown: 3
@@ -6944,7 +6947,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c77c0a6c800c21c458191c1aeb9ba4ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
+  maxHealth: 100
   destroyOnDeath: 0
   destroyDelay: 5
   invulnerabilityDuration: 0
@@ -7004,12 +7007,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf860b0b57675414ba697a94ae284c29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxCourage: 200
-  initialCourage: 20
-  destroyOnDeath: 0
-  destroyDelay: 0
-  courageLossOnProxy: 30
-  courageGainOnKill: 20
+  _maxCourage: 100
+  _initialCourage: 20
+  _destroyOnDeath: 0
+  _destroyDelay: 0
+  _courageLossOnProxy: 30
+  _courageGainOnKill: 20
   OnCourageChanged:
     m_PersistentCalls:
       m_Calls:
@@ -12069,7 +12072,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3008996408486415284, guid: dc44ce6fae55ac94ab1227a17ee1a52f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.2761307
+      value: 0.11
       objectReference: {fileID: 0}
     - target: {fileID: 3008996408486415284, guid: dc44ce6fae55ac94ab1227a17ee1a52f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -12113,7 +12116,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3116657540721728646, guid: dc44ce6fae55ac94ab1227a17ee1a52f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4028748896116243877, guid: dc44ce6fae55ac94ab1227a17ee1a52f, type: 3}
       propertyPath: playerLayer.m_Bits
@@ -14305,8 +14308,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd81931bd2499774293910d4dd1926df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveSpawner: {fileID: 330917530}
-  doors:
+  _waveSpawner: {fileID: 330917530}
+  _canRestartWave: 1
+  _doors:
   - {fileID: 695003831}
   - {fileID: 1139616489}
 --- !u!65 &1908170789
@@ -14825,6 +14829,59 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1974421377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1974421378}
+  - component: {fileID: 1974421379}
+  m_Layer: 0
+  m_Name: proximityCourage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1974421378
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974421377}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.93, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 901852048}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1974421379
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974421377}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!43 &2006587843
 Mesh:
   m_ObjectHideFlags: 0

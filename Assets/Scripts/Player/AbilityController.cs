@@ -4,6 +4,7 @@ public class AbilityController : MonoBehaviour
 {
     [Header("Grenade")]
     [SerializeField] GameObject grenadePrefab;
+    [SerializeField] int initialGrenadeCount = 0;
     [SerializeField] float grenadeThrowForce = 15f;
     [SerializeField] float grenadeArc = 30f;
     [SerializeField] float grenadeCooldown = 3f;
@@ -41,7 +42,7 @@ public class AbilityController : MonoBehaviour
 
     void Start()
     {
-        currentGrenades = maxGrenades;
+        currentGrenades = initialGrenadeCount;
     }
 
     void Update()

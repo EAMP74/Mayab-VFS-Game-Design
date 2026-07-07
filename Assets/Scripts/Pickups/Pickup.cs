@@ -7,6 +7,7 @@ public class Pickup : MonoBehaviour
     [Header("Type & Value")]
     [SerializeField] PickupType type = PickupType.Health;
     [SerializeField] float amount = 25f;
+    [SerializeField] float courageAmount = 30f;
     [SerializeField] WeaponData weaponToGive;
 
     [Header("Visual")]
@@ -41,6 +42,13 @@ public class Pickup : MonoBehaviour
         if (!other.CompareTag(playerTag)) return;
 
         bool used = false;
+
+        CourageController cc = other.GetComponent<CourageController>();
+        if (cc != null && cc.CurrentCourage < cc.MaxCourage)
+        {
+            cc.GainFromEncouragement(courageAmount);
+            used = true;
+        }
 
         switch (type)
         {

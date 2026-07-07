@@ -5,12 +5,14 @@ public class RoomActivator : MonoBehaviour
 {
     [Header("Waves")]
     [SerializeField] private GameObject _waveSpawner;
+    [SerializeField] private bool _canRestartWave;
 
     [Header("Door")]
     [SerializeField] private List<GameObject> _doors;
 
     private bool _isActivated = false;
     private bool _isFinished = false;
+    private bool _inRoom = false;
 
     private CourageController _playerCourage;
 
@@ -29,17 +31,21 @@ public class RoomActivator : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider player)
     {
-        if (!other.CompareTag("Player")) return;
+        if (!player.CompareTag("Player")) return;
+
+        _inRoom = !_inRoom;
+
+        ReactivateRoom();
 
         if (_isFinished || _isActivated) return;
 
-        _playerCourage = other.GetComponent<CourageController>();
+        _playerCourage = player.GetComponent<CourageController>();
 
         if (_playerCourage == null)
         {
-            _playerCourage = other.GetComponentInParent<CourageController>();
+            _playerCourage = player.GetComponentInParent<CourageController>();
         }
 
         ActivateRoom();
@@ -47,6 +53,8 @@ public class RoomActivator : MonoBehaviour
 
     private void ActivateRoom()
     {
+        if (!_inRoom) return;
+
         _isActivated = true;
         _playerCourage?.BeginRoomEncounter();
         if (_waveSpawner != null)
@@ -82,6 +90,16 @@ public class RoomActivator : MonoBehaviour
             {
                 door.SetActive(false);
             }
+        }
+    }
+
+    private void ReactivateRoom()
+    {
+        if (_inRoom) return;
+        if (_canRestartWave)
+        {
+            _isFinished = false;
+            _isActivated = false;
         }
     }
 }
