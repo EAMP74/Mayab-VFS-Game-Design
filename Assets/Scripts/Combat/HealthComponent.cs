@@ -1,3 +1,4 @@
+using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -31,6 +32,11 @@ public class HealthComponent : MonoBehaviour, IDamageable
     void Awake()
     {
         currentHealth = maxHealth;
+    }
+
+    private void Start()
+    {
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
     void Update()

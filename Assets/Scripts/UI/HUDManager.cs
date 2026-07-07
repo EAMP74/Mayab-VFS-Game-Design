@@ -11,6 +11,13 @@ public class HUDManager : MonoBehaviour
     [SerializeField] Color healthLowColor = Color.red;
     [SerializeField] float lowHealthThreshold = 0.3f;
 
+    [Header("Courage")]
+    [SerializeField] Image courageBarFill;
+    [SerializeField] TMP_Text courageText;
+    [SerializeField] Color courageFullColor = Color.green;
+    [SerializeField] Color courageLowColor = Color.red;
+    [SerializeField] float lowCourageThreshold = 0.3f;
+
     [Header("Ammo")]
     [SerializeField] TMP_Text ammoText;
     [SerializeField] Image ammoIcon;
@@ -53,6 +60,20 @@ public class HUDManager : MonoBehaviour
 
         if (healthText != null)
             healthText.text = $"{Mathf.CeilToInt(current)}/{Mathf.CeilToInt(max)}";
+    }
+
+    public void UpdateCourage(float current, float max)
+    {
+        float percent = current / max;
+
+        if (courageBarFill != null)
+        {
+            courageBarFill.fillAmount = percent;
+            courageBarFill.color = Color.Lerp(courageLowColor, courageFullColor, percent);
+        }
+
+        if (courageText != null)
+            courageText.text = $"{Mathf.CeilToInt(current)}/{Mathf.CeilToInt(max)}";
     }
 
     public void UpdateAmmo(int current, int max)

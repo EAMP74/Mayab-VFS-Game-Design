@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3404904279248236840}
   - component: {fileID: 2095618378102195214}
   m_Layer: 0
-  m_Name: FX_MuzzleFlash
+  m_Name: FX_PistolMuzzleFlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -117,8 +117,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.5
-      minScalar: 0.3
+      scalar: 0.1
+      minScalar: 0.01
       maxCurve:
         serializedVersion: 2
         m_Curve:

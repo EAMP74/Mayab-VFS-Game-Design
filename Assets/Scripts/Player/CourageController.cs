@@ -4,13 +4,14 @@ using UnityEngine.Events;
 public class CourageController : MonoBehaviour
 {
     [Header("Courage")]
-    [SerializeField] private float maxCourage = 100f;
-    [SerializeField] private bool destroyOnDeath;
-    [SerializeField] private float destroyDelay;
+    [SerializeField] private float _maxCourage = 100f;
+    [SerializeField] private float _initialCourage = 20f;
+    [SerializeField] private bool _destroyOnDeath;
+    [SerializeField] private float _destroyDelay;
 
     [Header("Room Caps")]
-    [SerializeField] private float courageLossOnProxy = 30f;
-    [SerializeField] private float courageGainOnKill = 20f;
+    [SerializeField] private float _courageLossOnProxy = 30f;
+    [SerializeField] private float _courageGainOnKill = 20f;
 
     [Header("Events")]
     public UnityEvent<float, float> OnCourageChanged;
@@ -18,82 +19,155 @@ public class CourageController : MonoBehaviour
     public UnityEvent OnTerrified;
     public UnityEvent OnEncouraged;
 
-    private float currentCourage;
-    private float proxyLossThisRoom;
-    private float killGainThisRoom;
+    private float _currentCourage;
+    private float _proxyLossThisRoom;
+    private float _killGainThisRoom;
 
-    private bool isTerrified;
-    private bool isInvulnerable;
-    private bool roomEncounterActive;
+    private bool _isTerrified;
+    private bool _isInvulnerable;
+    private bool _roomEncounterActive;
 
-    public float CourageLossOnProxy => courageLossOnProxy;
-
-    public float CurrentCourage => currentCourage;
-    public float MaxCourage => maxCourage;
-    public float HealthPercent => currentCourage / maxCourage;
-    public bool IsTerrified => isTerrified;
-    public bool IsInvulnerable { get => isInvulnerable; set => isInvulnerable = value; }
+    public float CurrentCourage => _currentCourage;
+    public float MaxCourage => _maxCourage;
+    public float CouragePercent => _maxCourage > 0f ? _currentCourage / _maxCourage: 0f;
+    public float ProxyLossThisRoom => _proxyLossThisRoom;
+    public float RemainingProxyLoss => Mathf.Max(0f, _courageLossOnProxy - _proxyLossThisRoom);
+    public float KillGainThisRoom => _killGainThisRoom;
+    public float RemainingKillGain => Mathf.Max(0f, _courageGainOnKill - _killGainThisRoom);
+    public bool IsTerrified => _isTerrified;
+    public bool IsInvulnerable { get => _isInvulnerable; set => _isInvulnerable = value; }
 
     void Awake()
     {
-        currentCourage = maxCourage;
+        _currentCourage = _initialCourage;
     }
 
-    void Update()
+    private void Start()
     {
-        //if (invulnerabilityTimer > 0f)
-        //{
-        //    invulnerabilityTimer -= Time.deltaTime;
-        //    if (invulnerabilityTimer <= 0f)
-        //        isInvulnerable = false;
-        //}
+        OnCourageChanged?.Invoke(_currentCourage, _maxCourage);
     }
 
-    public void GetScared(float amount)
+    public void BeginRoomEncounter()
     {
-        GetScared(amount, transform.position, Vector3.zero);
+        _roomEncounterActive = true;
+        _proxyLossThisRoom = 0f;
+        _killGainThisRoom = 0f;
     }
 
-    public void GetScared(float amount, Vector3 hitPoint, Vector3 hitDirection)
+    public void EndRoomEncounter()
     {
-        if (isTerrified || isInvulnerable) return;
-
-        currentCourage = Mathf.Max(0f, currentCourage - amount);
-        OnCourageChanged?.Invoke(currentCourage, maxCourage);
-        OnScared?.Invoke(hitPoint, hitDirection);
-
-        //if (maxCourageLoss > 0f)
-        //{
-        //    isInvulnerable = true;
-        //    invulnerabilityTimer = maxCourageLoss;
-        //}
-
-        if (currentCourage <= 0f)
-            GetTerrified();
+        _roomEncounterActive = false;
     }
 
-    public void GetEncourage(float amount)
+    public void LoseFromProximity(float amount)
     {
-        if (isTerrified) return;
-        currentCourage = Mathf.Min(maxCourage, currentCourage + amount);
-        OnCourageChanged?.Invoke(currentCourage, maxCourage);
-        OnEncouraged?.Invoke();
+        LoseFromProximity(amount, transform.position, Vector3.zero);
+    }
+
+    public void LoseFromProximity(float amount, Vector3 hitPoint, Vector3 hitDirection)
+    {
+        if (!CanChangeCourage() || amount <= 0f) return;
+
+        float allowedAmount = amount;
+
+        if (_roomEncounterActive)
+        {
+            allowedAmount = Mathf.Min(amount, RemainingProxyLoss);
+        }
+
+        if (allowedAmount <= 0f) return;
+
+        _proxyLossThisRoom += allowedAmount;
+
+        ApplyCourageLoss(allowedAmount, hitPoint, hitDirection);
+    }
+
+    public void LoseFromHit(float amount)
+    {
+        LoseFromHit(amount, transform.position, Vector3.zero);
+    }
+
+    public void LoseFromHit(float amount, Vector3 hitPoint, Vector3 hitDirection)
+    {
+        if (!CanChangeCourage() || amount <= 0f) return;
+        ApplyCourageLoss(amount, hitPoint, hitDirection);
+    }
+
+    public void GainFromKill(float amount)
+    {
+        if (_isTerrified || amount <= 0f) return;
+
+        float allowedAmount = amount;
+
+        if (_roomEncounterActive)
+        {
+            allowedAmount = Mathf.Min(amount, RemainingKillGain);
+        }
+
+        if (allowedAmount <= 0f) return;
+
+        _killGainThisRoom += allowedAmount;
+        ApplyCourageGain(allowedAmount);
+    }
+
+    public void GainFromEncouragement(float amount)
+    {
+        if (_isTerrified || amount <= 0f) return;
+        ApplyCourageGain(amount);
     }
 
     public void ResetCourage()
     {
-        isTerrified = false;
-        currentCourage = maxCourage;
-        isInvulnerable = false;
-        OnCourageChanged?.Invoke(currentCourage, maxCourage);
+        _isTerrified = false;
+        _currentCourage = _maxCourage;
+        _isInvulnerable = false;
+        _proxyLossThisRoom = 0f;
+        _killGainThisRoom = 0f;
+        OnCourageChanged?.Invoke(_currentCourage, _maxCourage);
     }
 
     void GetTerrified()
     {
-        isTerrified = true;
+        if (_isTerrified) return;
+
+        _isTerrified = true;
         OnTerrified?.Invoke();
 
-        if (destroyOnDeath)
-            Destroy(gameObject, destroyDelay);
+        if (_destroyOnDeath)
+        {
+            Destroy(gameObject, _destroyDelay);
+        }
+    }
+
+    private bool CanChangeCourage()
+    {
+        return !_isTerrified && !_isInvulnerable;
+    }
+
+    private void ApplyCourageLoss(float amount, Vector3 hitPoint, Vector3 hitDirection)
+    {
+        float previousCourage = _currentCourage;
+        _currentCourage = Mathf.Max(0f, _currentCourage - amount);
+        float actualLoss = previousCourage - _currentCourage;
+
+        if (actualLoss <= 0f) return;
+
+        OnCourageChanged?.Invoke(_currentCourage, _maxCourage);
+        OnScared?.Invoke(hitPoint, hitDirection);
+
+        if (_currentCourage <= 0f)
+            GetTerrified();
+    }
+
+    private void ApplyCourageGain(float amount)
+    {
+        float previousCourage = _currentCourage;
+        _currentCourage = Mathf.Min(_maxCourage, _currentCourage + amount);
+        float actualGain = _currentCourage - previousCourage;
+
+        if (actualGain <= 0f) return;
+
+        OnCourageChanged?.Invoke(_currentCourage, _maxCourage);
+        OnEncouraged?.Invoke();
     }
 }

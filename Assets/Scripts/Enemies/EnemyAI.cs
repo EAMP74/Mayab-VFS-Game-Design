@@ -166,6 +166,9 @@ public class EnemyAI : MonoBehaviour
         {
             IDamageable playerHealth = target.GetComponent<IDamageable>();
             playerHealth?.TakeDamage(data.damage, transform.position, transform.forward);
+
+            CourageController courage = target.GetComponent<CourageController>();
+            courage?.LoseFromHit(data.scareDamage, transform.position, transform.forward);
         }
     }
 
@@ -208,6 +211,12 @@ public class EnemyAI : MonoBehaviour
                 Rigidbody rb = hit.GetComponent<Rigidbody>();
                 rb?.AddExplosionForce(data.explosionDamage, transform.position, data.explosionRadius, 1f, ForceMode.Impulse);
             }
+        }
+
+        CourageController playerCourage = target.GetComponent<CourageController>();
+        if (playerCourage != null)
+        {
+            playerCourage.GainFromKill(data.courageOnDeath);
         }
 
         GameManager.Instance?.AddScore(data.scoreValue);

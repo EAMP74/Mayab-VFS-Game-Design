@@ -2766,6 +2766,11 @@ MonoBehaviour:
   healthFullColor: {r: 0, g: 1, b: 0, a: 1}
   healthLowColor: {r: 1, g: 0, b: 0, a: 1}
   lowHealthThreshold: 0.3
+  courageBarFill: {fileID: 2616851209175696444}
+  courageText: {fileID: 681897729752842979}
+  courageFullColor: {r: 1, g: 0.62352943, b: 0, a: 1}
+  courageLowColor: {r: 0.93121433, g: 1, b: 0, a: 1}
+  lowCourageThreshold: 0.3
   ammoText: {fileID: 1006422723502919477}
   ammoIcon: {fileID: 0}
   ammoNormalColor: {r: 1, g: 1, b: 1, a: 1}
