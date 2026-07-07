@@ -4,21 +4,23 @@ using System.Collections.Generic;
 public class RoomActivator : MonoBehaviour
 {
     [Header("Waves")]
-    [SerializeField] GameObject waveSpawner;
+    [SerializeField] private GameObject _waveSpawner;
 
     [Header("Door")]
-    [SerializeField] List<GameObject> doors;
+    [SerializeField] private List<GameObject> _doors;
 
-    bool isActivated = false;
-    bool isFinished = false;
+    private bool _isActivated = false;
+    private bool _isFinished = false;
+
+    private CourageController _playerCourage;
 
     private void Awake()
     {
-        if (waveSpawner != null)
+        if (_waveSpawner != null)
         {
-            waveSpawner.gameObject.SetActive(false);
+            _waveSpawner.gameObject.SetActive(false);
         }
-        foreach (GameObject door in doors)
+        foreach (GameObject door in _doors)
         {
             if (door != null)
             {
@@ -29,23 +31,29 @@ public class RoomActivator : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!other.CompareTag("Player")) return;
+
+        if (_isFinished || _isActivated) return;
+
+        _playerCourage = other.GetComponent<CourageController>();
+
+        if (_playerCourage == null)
         {
-            if (!isFinished)
-            {
-                ActivateRoom();
-            }
+            _playerCourage = other.GetComponentInParent<CourageController>();
         }
+
+        ActivateRoom();
     }
 
     private void ActivateRoom()
     {
-        isActivated = true;
-        if (waveSpawner != null)
+        _isActivated = true;
+        _playerCourage?.BeginRoomEncounter();
+        if (_waveSpawner != null)
         {
-            waveSpawner.gameObject.SetActive(true);
+            _waveSpawner.SetActive(true);
         }
-        foreach (GameObject door in doors)
+        foreach (GameObject door in _doors)
         {
             if (door != null)
             {
@@ -56,13 +64,19 @@ public class RoomActivator : MonoBehaviour
 
     public void CompleteWave()
     {
-        isFinished = true;
-        isActivated = false;
-        if (waveSpawner != null)
+        if (_isFinished) return;
+
+        _isFinished = true;
+        _isActivated = false;
+
+        _playerCourage?.EndRoomEncounter();
+
+        if (_waveSpawner != null)
         {
-            waveSpawner.gameObject.SetActive(false);
+            _waveSpawner.gameObject.SetActive(false);
         }
-        foreach (GameObject door in doors)
+
+        foreach (GameObject door in _doors)
         {
             if (door != null)
             {
