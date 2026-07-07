@@ -10,7 +10,9 @@ public class EnemyData : ScriptableObject
     public float maxHealth = 50f;
     public float moveSpeed = 3.5f;
     public float damage = 10f;
-    public float scareFactor = 1f;
+    public float scareProxy = 1f;
+    public float scareDamage = 5f;
+    public float courageOnDeath = 10f;
 
     [Header("AI Behavior")]
     public float detectionRange = 20f;

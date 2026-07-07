@@ -8,15 +8,9 @@ public class RoomActivator : MonoBehaviour
 
     [Header("Door")]
     [SerializeField] List<GameObject> doors;
-    //[SerializeField] Transform closeDoor;
 
     bool isActivated = false;
     bool isFinished = false;
-
-    //private void Update()
-    //{
-    //    CompleteWave();
-    //}
 
     private void Awake()
     {
