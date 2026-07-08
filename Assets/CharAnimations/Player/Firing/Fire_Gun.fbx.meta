@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 174ef7279ed026f41854ce69a21e7bf4
+guid: 3c78c85583bcec149b3e428bc9dc0615
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -31,11 +31,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: walkFire
+      name: idleFire
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 0
-      lastFrame: 13.2
+      firstFrame: 5.5
+      lastFrame: 32.7
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
