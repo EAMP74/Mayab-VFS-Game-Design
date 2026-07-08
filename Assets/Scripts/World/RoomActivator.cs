@@ -7,7 +7,10 @@ public class RoomActivator : MonoBehaviour
     [SerializeField] private GameObject _waveSpawner;
     [SerializeField] private bool _canRestartWave;
 
-    [Header("Door")]
+    [Header("Fog")]
+    [SerializeField] private GameObject _fogBox;
+
+    [Header("Doors")]
     [SerializeField] private List<GameObject> _doors;
 
     private bool _isActivated = false;
@@ -36,6 +39,21 @@ public class RoomActivator : MonoBehaviour
         if (!player.CompareTag("Player")) return;
 
         _inRoom = !_inRoom;
+
+        if (_inRoom)
+        {
+            if (_fogBox != null)
+            {
+                _fogBox.SetActive(false);
+            }
+        }
+        else
+        {
+            if (_fogBox != null)
+            {
+                _fogBox.SetActive(true);
+            }
+        }
 
         ReactivateRoom();
 
