@@ -16,6 +16,10 @@ MonoBehaviour:
   maxHealth: 50
   moveSpeed: 3.5
   damage: 10
+  scareProxy: 1
+  scareProxyTimer: 2
+  scareDamage: 5
+  courageOnDeath: 10
   detectionRange: 20
   attackRange: 2
   attackCooldown: 1.5

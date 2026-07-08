@@ -110,17 +110,21 @@ public class PlayerController : MonoBehaviour
 
         float courageMultiplier = GetCourageSpeedMultiplier();
 
-        _currentSpeed = baseSpeed * courageMultiplier;
-
+        _currentSpeed = (baseSpeed * courageMultiplier) + 0.5f;
+        //_currentSpeed = _input.Sprint ? (_runSpeed * courageMultiplier) : (_moveSpeed * courageMultiplier) + 0.8f;
+        
         _rb.linearVelocity = inputDir.normalized * _currentSpeed;
         
         if (_animator != null)
         {
-            _animator.SetBool("isRunning", _input.Sprint);
+            _animator.SetFloat("Courage", courageMultiplier);
+            _animator.SetBool("isRunning", _input.Move.magnitude > 0 && _input.Sprint);
 
-            float animationBlend = _rb.linearVelocity.magnitude / _moveSpeed;
+            Vector3 animationSpeed = inputDir.normalized * baseSpeed;
+            float animationBlend = animationSpeed.magnitude;
             _animator.SetFloat("Blend", animationBlend);
         }
+        Debug.Log(courageMultiplier);
     }
 
     private float GetCourageSpeedMultiplier()
