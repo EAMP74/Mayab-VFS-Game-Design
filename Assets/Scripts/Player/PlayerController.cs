@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _aimPivot;
     [SerializeField] private float _aimSmoothing = 10f;
     [SerializeField] private PlayerDash _dash;
+    [SerializeField] private CourageController _playerCourage;
+    [SerializeField] private float _minVelocity = 0.2f;
 
     [SerializeField] private Animator _animator;
 
@@ -35,23 +37,15 @@ public class PlayerController : MonoBehaviour
         _rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
         _rb.interpolation = RigidbodyInterpolation.Interpolate;
         _mainCam = Camera.main;
+        if (_playerCourage == null)
+        {
+            _playerCourage = GetComponent<CourageController>();
+        }
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
-
         UpdateAiming();
-
-
     }
 
     private void UpdateAiming()
@@ -76,8 +70,8 @@ public class PlayerController : MonoBehaviour
             _aimPivot.rotation = targetRotation;
 
         }
+    }
 
-}
     private void FixedUpdate()
     {
         UpdateMovement();
@@ -107,14 +101,36 @@ public class PlayerController : MonoBehaviour
 
         MoveDirection = inputDir;
 
-        float currentSpeed = _moveSpeed;
-        if (_input.Sprint) currentSpeed = _runSpeed;
-        _animator.SetBool("isRunning", _input.Sprint);
+        if (inputDir.magnitude < 1f)
+        {
+            inputDir.Normalize();
+        }
 
-        inputDir.Normalize();
+        float baseSpeed = _input.Sprint ? _runSpeed: _moveSpeed;
 
-        _rb.linearVelocity = inputDir * currentSpeed;
+        float courageMultiplier = GetCourageSpeedMultiplier();
 
-        _animator.SetFloat("Blend", _rb.linearVelocity.magnitude / _moveSpeed); 
+        _currentSpeed = baseSpeed * courageMultiplier;
+
+        _rb.linearVelocity = inputDir.normalized * _currentSpeed;
+        
+        if (_animator != null)
+        {
+            _animator.SetBool("isRunning", _input.Sprint);
+
+            float animationBlend = _rb.linearVelocity.magnitude / _moveSpeed;
+            _animator.SetFloat("Blend", animationBlend);
+        }
+    }
+
+    private float GetCourageSpeedMultiplier()
+    {
+        if (_playerCourage == null) return 1f;
+
+        float couragePercent = _playerCourage.CurrentCourage / _playerCourage.MaxCourage;
+
+        couragePercent = Mathf.Clamp01(couragePercent);
+
+        return Mathf.Max(_minVelocity, couragePercent);
     }
 }
