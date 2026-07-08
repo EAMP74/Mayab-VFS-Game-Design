@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponName: Pistol
   icon: {fileID: 0}
   weaponModel: {fileID: 1562996608389564, guid: a1608518da2a041418e8a5351d223d94, type: 3}
+  isPistol: 1
   damage: 10
   fireRate: 5
   spread: 1

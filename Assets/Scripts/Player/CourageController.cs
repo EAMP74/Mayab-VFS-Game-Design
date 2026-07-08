@@ -112,7 +112,6 @@ public class CourageController : MonoBehaviour
 
     public void GainFromEncouragement(float amount)
     {
-        if (_isTerrified || amount <= 0f) return;
         ApplyCourageGain(amount);
     }
 
@@ -166,6 +165,11 @@ public class CourageController : MonoBehaviour
         float actualGain = _currentCourage - previousCourage;
 
         if (actualGain <= 0f) return;
+
+        if (_isTerrified)
+        {
+            _isTerrified = false;
+        }
 
         OnCourageChanged?.Invoke(_currentCourage, _maxCourage);
         OnEncouraged?.Invoke();
