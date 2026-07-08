@@ -7,6 +7,7 @@ public class WeaponData : ScriptableObject
     public string weaponName = "Pistol";
     public Sprite icon;
     public GameObject weaponModel;
+    public bool isPistol;
 
     [Header("Firing")]
     public float damage = 10f;

@@ -130,7 +130,10 @@ public class WeaponController : MonoBehaviour
             CameraShake.Instance?.Shake(CurrentWeapon.cameraShakeIntensity);
 
         if (animator != null)
+        {
             animator.SetTrigger(fireTrigger);
+            animator.SetBool("isPistol", CurrentWeapon.isPistol);
+        }
 
         OnAmmoChanged?.Invoke(currentAmmo, CurrentWeapon.magazineSize);
         OnFired?.Invoke();
