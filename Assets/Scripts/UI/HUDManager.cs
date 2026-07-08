@@ -1,9 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class HUDManager : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] string _mainMenuScene = "MainMenu";
+
     [Header("Health")]
     [SerializeField] Image healthBarFill;
     [SerializeField] TMP_Text healthText;
@@ -154,5 +158,15 @@ public class HUDManager : MonoBehaviour
                 parentCanvas.GetComponent<RectTransform>(), mousePos, parentCanvas.worldCamera, out Vector2 localPos);
             crosshair.localPosition = localPos;
         }
+    }
+
+    public void restartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void returnToMainMenu()
+    {
+        SceneManager.LoadScene(_mainMenuScene);
     }
 }

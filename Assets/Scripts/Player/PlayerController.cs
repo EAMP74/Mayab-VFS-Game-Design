@@ -124,7 +124,6 @@ public class PlayerController : MonoBehaviour
             float animationBlend = animationSpeed.magnitude;
             _animator.SetFloat("Blend", animationBlend);
         }
-        Debug.Log(_currentSpeed);
     }
 
     private float GetCourageSpeedMultiplier()
