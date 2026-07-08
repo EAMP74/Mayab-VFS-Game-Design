@@ -60,6 +60,11 @@ public class WaveSpawner : MonoBehaviour
             StartSpawning();
     }
 
+    private void OnEnable()
+    {
+        StartSpawning();
+    }
+
     public void StartSpawning()
     {
         isActive = true;
