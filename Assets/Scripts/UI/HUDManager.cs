@@ -2,11 +2,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class HUDManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] string _mainMenuScene = "MainMenu";
+    [SerializeField] string _gameScene = "Level_1_Eduardo";
 
     [Header("Health")]
     [SerializeField] Image healthBarFill;
@@ -162,11 +164,20 @@ public class HUDManager : MonoBehaviour
 
     public void restartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(_gameScene);
     }
 
     public void returnToMainMenu()
     {
         SceneManager.LoadScene(_mainMenuScene);
+    }
+
+    public void quitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }
