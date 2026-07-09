@@ -121,6 +121,7 @@ GameObject:
   - component: {fileID: 4719121265104329282}
   - component: {fileID: 2692900035073488330}
   - component: {fileID: 6493873052801008937}
+  - component: {fileID: 3069572884915561878}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -321,9 +322,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b79bb41b77f52764d80f9fc3f615db5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grenadePrefab: {fileID: 0}
-  initialGrenadeCount: 0
-  grenadeThrowForce: 15
+  grenadePrefab: {fileID: 8115024567564222934, guid: d48dcd744ed9f534fa00e9aea1c9bb01, type: 3}
+  initialGrenadeCount: 3
+  grenadeThrowForce: 5
   grenadeArc: 30
   grenadeCooldown: 3
   maxGrenades: 3
@@ -454,6 +455,18 @@ MonoBehaviour:
   m_IgnoreFromBuild: 1
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
+--- !u!114 &3069572884915561878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6013211455082476018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0364fde3c21b31f4d84bfd0e6ba62e6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4749924242738877992
 PrefabInstance:
   m_ObjectHideFlags: 0

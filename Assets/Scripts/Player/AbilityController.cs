@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AbilityController : MonoBehaviour
 {
@@ -31,6 +32,9 @@ public class AbilityController : MonoBehaviour
     [SerializeField] InputReader input;
     [SerializeField] PlayerController playerController;
 
+    [Header("Events")]
+    public UnityEvent<int, int> GrenadeChange;
+
     float grenadeCooldownTimer;
     float meleeCooldownTimer;
     int currentGrenades;
@@ -43,6 +47,7 @@ public class AbilityController : MonoBehaviour
     void Start()
     {
         currentGrenades = initialGrenadeCount;
+        GrenadeChange?.Invoke(currentGrenades, maxGrenades);
     }
 
     void Update()
@@ -77,6 +82,8 @@ public class AbilityController : MonoBehaviour
             if (grenadeRb != null)
                 grenadeRb.linearVelocity = throwRotation * Vector3.forward * grenadeThrowForce;
         }
+
+        GrenadeChange?.Invoke(currentGrenades, maxGrenades);
 
         if (grenadeThrowSound != null)
             AudioManager.Instance?.PlaySFX(grenadeThrowSound, transform.position);
@@ -129,6 +136,13 @@ public class AbilityController : MonoBehaviour
     public void AddGrenades(int amount)
     {
         currentGrenades = Mathf.Min(currentGrenades + amount, maxGrenades);
+        GrenadeChange?.Invoke(currentGrenades, maxGrenades);
+    }
+
+    public void SetGrenades(int amount)
+    {
+        currentGrenades = Mathf.Clamp(amount, 0, maxGrenades);
+        GrenadeChange?.Invoke(currentGrenades, maxGrenades);
     }
 
     void OnDrawGizmosSelected()

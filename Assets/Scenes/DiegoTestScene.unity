@@ -4010,6 +4010,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 4129950005592673907, guid: 3f3f0485dd1342142a6bbce31a7d387d, type: 3}
+      propertyPath: m_text
+      value: 'Grenades: 3/3'
+      objectReference: {fileID: 0}
     - target: {fileID: 5724509605706252943, guid: 3f3f0485dd1342142a6bbce31a7d387d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -12235,7 +12239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3116657540721728646, guid: dc44ce6fae55ac94ab1227a17ee1a52f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4028748896116243877, guid: dc44ce6fae55ac94ab1227a17ee1a52f, type: 3}
       propertyPath: playerLayer.m_Bits
@@ -15900,9 +15904,53 @@ PrefabInstance:
       propertyPath: OnWeaponChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 646223764}
+    - target: {fileID: 1832215054670613150, guid: 695d670cb21aa5d42a4de1eccf441400, type: 3}
+      propertyPath: initialGrenadeCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832215054670613150, guid: 695d670cb21aa5d42a4de1eccf441400, type: 3}
+      propertyPath: GrenadeChange.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832215054670613150, guid: 695d670cb21aa5d42a4de1eccf441400, type: 3}
+      propertyPath: GrenadeChange.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 646223764}
+    - target: {fileID: 1832215054670613150, guid: 695d670cb21aa5d42a4de1eccf441400, type: 3}
+      propertyPath: GrenadeChange.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832215054670613150, guid: 695d670cb21aa5d42a4de1eccf441400, type: 3}
+      propertyPath: GrenadeChange.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateGrenades
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832215054670613150, guid: 695d670cb21aa5d42a4de1eccf441400, type: 3}
+      propertyPath: GrenadeChange.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: HUDManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832215054670613150, guid: 695d670cb21aa5d42a4de1eccf441400, type: 3}
+      propertyPath: GrenadeChange.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2692900035073488330, guid: 695d670cb21aa5d42a4de1eccf441400, type: 3}
+      propertyPath: m_Height
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2692900035073488330, guid: 695d670cb21aa5d42a4de1eccf441400, type: 3}
+      propertyPath: m_Radius
+      value: 0.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 2692900035073488330, guid: 695d670cb21aa5d42a4de1eccf441400, type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2692900035073488330, guid: 695d670cb21aa5d42a4de1eccf441400, type: 3}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5218172030256164633, guid: 695d670cb21aa5d42a4de1eccf441400, type: 3}
       propertyPath: maxHealth
-      value: 10
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5218172030256164633, guid: 695d670cb21aa5d42a4de1eccf441400, type: 3}
       propertyPath: loseScreen

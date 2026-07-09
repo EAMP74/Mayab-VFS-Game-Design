@@ -95,8 +95,6 @@ public class CourageController : MonoBehaviour
 
     public void GainFromKill(float amount)
     {
-        if (_isTerrified || amount <= 0f) return;
-
         float allowedAmount = amount;
 
         if (_roomEncounterActive)

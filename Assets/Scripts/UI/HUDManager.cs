@@ -126,7 +126,7 @@ public class HUDManager : MonoBehaviour
     public void UpdateGrenades(int current, int max)
     {
         if (grenadeText != null)
-            grenadeText.text = $"{current}/{max}";
+            grenadeText.text = $"Grenades: {current}/{max}";
     }
 
     public void UpdateDashCharges(int current, int max)
