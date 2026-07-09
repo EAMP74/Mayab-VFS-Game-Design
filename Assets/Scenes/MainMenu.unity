@@ -724,7 +724,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 51850743145760810, guid: 7579475cd29d5b346b200ea45cff6a69, type: 3}
       propertyPath: m_text
-      value: Fearful Death
+      value: Fearful Dead
       objectReference: {fileID: 0}
     - target: {fileID: 51850743145760810, guid: 7579475cd29d5b346b200ea45cff6a69, type: 3}
       propertyPath: m_fontAsset
