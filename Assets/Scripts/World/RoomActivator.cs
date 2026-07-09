@@ -40,19 +40,9 @@ public class RoomActivator : MonoBehaviour
 
         _inRoom = !_inRoom;
 
-        if (_inRoom)
+        if (_fogBox != null)
         {
-            if (_fogBox != null)
-            {
-                _fogBox.SetActive(false);
-            }
-        }
-        else
-        {
-            if (_fogBox != null)
-            {
-                _fogBox.SetActive(true);
-            }
+            _fogBox.SetActive(false);
         }
 
         ReactivateRoom();

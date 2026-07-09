@@ -46,6 +46,8 @@ public class WeaponController : MonoBehaviour
         if (availableWeapons == null || availableWeapons.Length == 0) return;
         currentWeaponIndex = Mathf.Clamp(startingWeaponIndex, 0, availableWeapons.Length - 1);
         EquipWeapon(currentWeaponIndex);
+        OnWeaponChanged?.Invoke(CurrentWeapon);
+        OnAmmoChanged?.Invoke(currentAmmo, CurrentWeapon.magazineSize);
     }
 
     void Update()
@@ -57,6 +59,9 @@ public class WeaponController : MonoBehaviour
         HandleFiring();
         HandleReload();
         HandleWeaponSwitch();
+
+        OnWeaponChanged?.Invoke(CurrentWeapon);
+        OnAmmoChanged?.Invoke(currentAmmo, CurrentWeapon.magazineSize);
     }
 
     void HandleFiring()

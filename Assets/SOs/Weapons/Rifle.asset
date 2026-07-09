@@ -24,7 +24,7 @@ MonoBehaviour:
   projectileSpeed: 40
   projectileLifetime: 2
   projectilePrefab: {fileID: 1887718299034201942, guid: 24180c9107227ac4db3f08b216fd3bb3, type: 3}
-  muzzleFlashPrefab: {fileID: 4505325863890636555, guid: 0b09c4756c974414cb8ebd162688745a, type: 3}
+  muzzleFlashPrefab: {fileID: 1204719232291468093, guid: bd8e29acde63c0e4da5646061c659a25, type: 3}
   impactEffectPrefab: {fileID: 0}
   magazineSize: 25
   reloadTime: 2
